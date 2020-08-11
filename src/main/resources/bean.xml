@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--
+        这个配置文件介绍基本配置方法，详细介绍了切入点表达式得到相关写法规则。
+    -->
+
+    <!--配置 Spring 的 IoC ，把 Service 对象配置进来-->
+    <bean id="accountService" class="com.jk.xml.service.impl.AccountServiceImpl"/>
+
+    <!--
+        配置 aop
+            1 把通知 Bean 也交给 Spring 来管理
+            2 使用 aop:config 标签配置 AOP
+            3 使用 aop:config 标签中的 aop:aspect 标签配置切面
+                属性：
+                    id：给切面提供一个唯一标识
+                    ref：指定通知类的 id
+            4 在 aop:aspect 标签内部使用对应标签来配置通知类型
+                例如：目前使用的 printLog 方法在 切入点 执行方法之前执行，所以应该使用前置通知。
+                    aop:before - 配置前置通知
+                        method 属性：用于指定 通知类中用于通知的方法。
+                        pointcut属性：用于指定切入点表达式，该表达式指定了被代理类中的哪个或那些方法进行增强。
+
+            切入点表达式写法:execution(表达式)，表达式内容：[权限修饰符][返回值类型][类的全限定类名][方法名称](参数列表)
+
+            标准写法：public void com.jk.xml.service.impl.AccountServiceImpl.saveAccount()
+
+            省略访问修饰符：void com.jk.xml.service.impl.AccountServiceImpl.saveAccount()
+
+            使用通配符表示返回值：* com.jk.xml.service.impl.AccountServiceImpl.saveAccount()
+
+            使用通配符表示包名：* *.*.*.*.*.AccountServiceImpl.saveAccount()
+                    注意：有几级包就得写几个 *. 通配符，也可以使用 .. 来表示当前包及其子包
+                    写法：* *..AccountServiceImpl.saveAccount()
+
+            使用通配符来表示类名：* *..*.saveAccount()
+
+            使用通配符来表示方法名：* *..AccountServiceImpl.*()，这样只会通配没有参数列表的方法
+
+            参数列表：
+                直接写数据类型：
+                    基本类型写：名称，如 int ==> * *..AccountServiceImpl.*(int)
+                    引用类型写：包名.类名，如 java.lang.Integer ==> * *..AccountServiceImpl.*(java.lang.Integer)
+                    使用通配符表示任意类型，但是必须有参数：* *..AccountServiceImpl.*(*)
+                    使用 .. 来表示有无参数都可以:* *..AccountServiceImpl.*(..)
+            全通配写法：* *..*.*(..)
+
+            以上只是结束 切入点表达式的一些规则和写法，实际开发中的通常写法如下：
+                * com.jk.xml.service.impl.*.*(..)，表示业务逻辑层的所有类和方法
+    -->
+    <!--1 配置通知类-->
+    <bean id="aopUtil" class="com.jk.xml.utils.AopUtil"/>
+    <aop:config>
+        <!--2 配置切面-->
+        <aop:aspect id="logAdvice" ref="aopUtil">
+            <!--3 配置通知的类型，并关联 通知(advice) 和 切入点(point cut)-->
+            <aop:before method="beforeAdvice" pointcut="execution(* com.jk.xml.service.impl.*.*(..))"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>

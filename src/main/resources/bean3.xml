@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--
+        这个配置用于介绍环绕通知
+    -->
+
+    <!--配置 Spring 的 IoC ，把 Service 对象配置进来-->
+    <bean id="accountService" class="com.jk.xml.service.impl.AccountServiceImpl"/>
+
+    <!-- 配置通知类-->
+    <bean id="logger" class="com.jk.xml.utils.AopUtil"/>
+    <aop:config>
+        <aop:pointcut id="aopCut" expression="execution(* com.jk.xml.service.impl.*.*(..))"/>
+        <aop:aspect id="logAdvice" ref="logger">
+            <!--配置环绕通知：注释在 AopUtil 类中-->
+            <aop:around method="aroundAdvice" pointcut-ref="aopCut"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>
