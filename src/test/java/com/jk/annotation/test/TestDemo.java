@@ -1,6 +1,6 @@
-package com.jk.xml.test;
+package com.jk.annotation.test;
 
-import com.jk.xml.service.AccountService;
+import com.jk.annotation.service.AccountService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,17 +8,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * 测试 AOP 环绕通知
+ * 测试基于注解实现 AOP
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:xml/bean3.xml"})
-public class TestBean3 {
-    @Autowired
-    AccountService as;
+@ContextConfiguration(locations = "classpath:annotation/bean.xml")
+public class TestDemo {
 
-    //测试环绕通知，注释在通知类中
+    @Autowired
+    private AccountService as;
+    //测试注解
     @Test
-    public void testBeforeAdvice(){
+    public void testAnnotation(){
         as.saveAccount();
     }
 }

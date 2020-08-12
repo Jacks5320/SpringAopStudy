@@ -11,12 +11,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * 测试 AOP 的基本配置 bean.xml
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:bean.xml"})
+@ContextConfiguration(locations = {"classpath:xml/bean.xml"})
 public class TestBean1 {
     @Autowired
     AccountService as;
 
-    //测试基本通知配置
+    //测试通知配置
     @Test
     public void testBeforeAdvice(){
         as.saveAccount();
