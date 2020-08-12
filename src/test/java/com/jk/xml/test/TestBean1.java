@@ -22,5 +22,6 @@ public class TestBean1 {
         as.saveAccount();
         as.updateAccount(1);
         as.deleteAccount();
+        as.moreArgs(1,"aa");
     }
 }

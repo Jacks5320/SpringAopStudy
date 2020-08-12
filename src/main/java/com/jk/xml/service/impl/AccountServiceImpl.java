@@ -1,6 +1,7 @@
 package com.jk.xml.service.impl;
 
 import com.jk.xml.service.AccountService;
+import com.jk.xml.entity.Account;
 
 public class AccountServiceImpl implements AccountService {
     @Override
@@ -19,5 +20,16 @@ public class AccountServiceImpl implements AccountService {
     public int deleteAccount() {
         System.out.println("删除方法执行了。。。");
         return 0;
+    }
+
+    @Override
+    public String moreArgs(int id, String name) {
+        System.out.println("多参数方法执行了。。。");
+        return "";
+    }
+
+    @Override
+    public void objArgs(Account account) {
+        System.out.println("引用类型参数方法执行了。。。");
     }
 }

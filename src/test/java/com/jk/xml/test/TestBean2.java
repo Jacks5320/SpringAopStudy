@@ -20,5 +20,7 @@ public class TestBean2 {
     @Test
     public void testBeforeAdvice(){
         as.saveAccount();
+        as.updateAccount(1);
+        as.deleteAccount();
     }
 }

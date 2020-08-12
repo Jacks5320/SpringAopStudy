@@ -23,13 +23,13 @@
     <bean id="accountService" class="com.jk.xml.service.impl.AccountServiceImpl"/>
 
     <!-- 配置通知类-->
-    <bean id="logger" class="com.jk.xml.utils.AopUtil"/>
+    <bean id="aopUtil" class="com.jk.xml.utils.AopUtil"/>
     <aop:config>
-        <aop:aspect id="logAdvice" ref="logger">
+        <aop:aspect id="accountAdvice" ref="aopUtil">
             <!--前置通知：切入点方法执行之前执行-->
-            <aop:before method="beforeAdvice" pointcut="execution(* com.jk.xml.service.impl.*.*(..))"/>
+            <aop:before method="beforeAdvice" pointcut="execution(* com.jk.xml.service.impl.*.saveAccount(..))"/>
             <!--后置通知：切入点方法正常执行之后执行-->
-            <aop:after-returning method="afterReturningAdvice" pointcut="execution(* com.jk.xml.service.impl.*.*(..))"/>
+            <aop:after-returning method="afterReturningAdvice" pointcut-ref="aopPoint"/>
             <!--异常通知：切入点方法产生异常时才会执行-->
             <!--<aop:after-throwing method="afterThrowingAdvice" pointcut="execution(* com.jk.xml.service.impl.*.*(..))"/>-->
             <aop:after-throwing method="afterThrowingAdvice" pointcut-ref="aopPoint"/>
@@ -46,8 +46,7 @@
                      如果写在外部，则必须写在 aop:aspect 标签的上面。
                      如果写在内部，可以写在通知标签下面。
             -->
-            <aop:pointcut id="aopPoint" expression="execution(* com.jk.xml.service.impl.*.*(..))"/>
+            <aop:pointcut id="aopPoint" expression="execution(* com.jk.xml.service.impl.*.saveAccount(..))"/>
         </aop:aspect>
     </aop:config>
-
 </beans>

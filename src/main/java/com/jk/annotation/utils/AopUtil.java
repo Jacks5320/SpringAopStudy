@@ -59,7 +59,7 @@ public class AopUtil {
             System.out.println("<==around，环绕通知在之后加上了，afterThrowing==>");//写在 catch 里面表示异常通知
             throw new RuntimeException(t);
         } finally {
-            System.out.println("<==around，环绕通知在之后加上了，afterReturning==>");//写在 finally 里面表示最终通知
+            System.out.println("<==around，环绕通知在最后加上了，after==>");//写在 finally 里面表示最终通知
         }
 
     }

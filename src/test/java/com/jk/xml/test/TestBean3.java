@@ -18,7 +18,8 @@ public class TestBean3 {
 
     //测试环绕通知，注释在通知类中
     @Test
-    public void testBeforeAdvice(){
-        as.saveAccount();
+    public void testAroundAdvice(){
+        // as.saveAccount();
+        as.updateAccount(1);
     }
 }
